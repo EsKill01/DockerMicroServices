@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  lil.custumers:
+    image: ${DOCKER_REGISTRY-}lilcustumers
+    build:
+      context: .
+      dockerfile: Lil.Custumers/Dockerfile
+    ports:
+     - 5000:80
+
+
+  lil.products:
+    image: ${DOCKER_REGISTRY-}lilproducts
+    build:
+      context: .
+      dockerfile: Lil.Products/Dockerfile
+    ports:
+     - 5001:80
+
+  lil.sales:
+    image: ${DOCKER_REGISTRY-}lilsales
+    build:
+      context: .
+      dockerfile: Lil.Sales/Dockerfile
+    ports:
+     - 5002:80
+
+
+  lil.search:
+    image: ${DOCKER_REGISTRY-}lilsearch
+    build:
+      context: .
+      dockerfile: Lil.Search/Dockerfile
+    ports:
+     - 32320:80
+    environment:
+      - Services__Customers=http://lil.custumers
+      - Services__Sales=http://lil.sales
+      - Services__Products=http://lil.products
+
